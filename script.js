@@ -1,8 +1,9 @@
+let hour = 0;
 let min = 0;
 let sec = 0;
 let millSec = 0;
 
-let startPause = true;
+let startPause = false;
 let cron;
 
 // Botões
@@ -24,29 +25,41 @@ function pause() {
 }
 
 function reset() {
-  let min = 0;
-  let sec = 0;
-  let millSec = 0;
+  if (!startPause) {
+    pause();
+  }
+
+  document.getElementById("h").innerHTML = returnData(0);
+  document.getElementById("m").innerHTML = returnData(0);
+  document.getElementById("s").innerHTML = returnData(0);
+  document.getElementById("ms").innerHTML = returnData(0);
+
+  hour = 0;
+  min = 0;
+  sec = 0;
+  millSec = 0;
 }
 
-document.getElementById("h").innerHTML = "00";
-document.getElementById("m").innerHTML = "00";
-document.getElementById("s").innerHTML = "00";
-document.getElementById("ms").innerHTML = "00";
-
 function timer() {
-  if ((ms += 10) == 1000) {
-    ms = 0;
-    s++;
+  millSec += 10;
+
+  if (millSec === 1000) {
+    millSec = 0;
+    sec++;
   }
-  if (s == 60) {
-    s = 0;
-    m++;
+  if (sec === 60) {
+    sec = 0;
+    min++;
   }
-  if (m == 60) {
-    m = 0;
-    h++;
+  if (min === 60) {
+    min = 0;
+    hour++;
   }
+
+  document.getElementById("h").innerHTML = returnData(hour);
+  document.getElementById("m").innerHTML = returnData(min);
+  document.getElementById("s").innerHTML = returnData(sec);
+  document.getElementById("ms").innerHTML = returnData(millSec);
 }
 
 function returnData(input) {
